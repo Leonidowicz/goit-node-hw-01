@@ -1,6 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
-const c = require('./getContacts');
+const contactList = require('./getContacts');
 const { v4: uuidv4 } = require('uuid');
 
 //-----------
@@ -10,16 +10,15 @@ const contactsPath = path.resolve('./db/', 'contacts.json');
 //-----------
 
 const addContact = async (contact) => {
-  console.log('~ contact~', contact);
-
   if (
     contact.name &&
     contact.phone &&
     contact.email &&
-    contact.name?.length > 0 &&
-    contact.email?.length > 0
+    contact.name?.length &&
+    contact.email?.length &&
+    typeof contact.phone === 'number'
   ) {
-    const contacts = await c();
+    const contacts = await contactList();
     const newContact = { id: uuidv4(), ...contact };
     try {
       await fs.writeFile(
@@ -28,8 +27,10 @@ const addContact = async (contact) => {
       );
       return newContact;
     } catch {
-      throw new Error('Please check name/email/phone information');
+      (error) => error;
     }
+  } else {
+    throw new Error('Please check name/email/phone information');
   }
 };
 

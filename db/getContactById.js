@@ -1,19 +1,17 @@
-const fs = require('fs/promises');
-const path = require('path');
+const contacts = require('./getContacts');
 
 //-----------
 
-const contactsPath = path.resolve('./db/', 'contacts.json');
+async function getContactById(id) {
+  const c = await contacts();
 
-//-----------
-
-const getContactById = async (id) => {
-  const data = await fs.readFile(contactsPath);
-  const contact = JSON.parse(data).filter((item) => item.id === id);
-  return contact?.length === 1
-    ? contact
-    : console.log(`something is wrong, you need check the get parameters`);
-};
+  const contact = c.find((item) => item.id === id);
+  if (!contact || contact.length === 0) {
+    throw new Error('Contact not found');
+  } else {
+    return contact;
+  }
+}
 
 //-----------
 

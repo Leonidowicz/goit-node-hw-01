@@ -1,28 +1,29 @@
+const c = require('./getContacts');
 const fs = require('fs/promises');
 const path = require('path');
-
-//-----------
-
 const contactsPath = path.resolve('./db/', 'contacts.json');
 
 //-----------
 
 const deleteContactById = async (id) => {
-  const data = await fs.readFile(contactsPath);
-  const contacts = JSON.parse(data).filter((item) => item.id !== id);
-  const delitingContact = JSON.parse(data).filter((item) => item.id === id);
+  const contacts = await c();
+
+  const filtredContacts = contacts.indeOf((item) => item.id !== id);
+  const delitingContact = contacts.find((item) => item.id === id);
+
   await fs.writeFile(
     contactsPath,
-    JSON.stringify(contacts),
-    [],
-    (function (error) {
+    JSON.stringify(filtredContacts),
+    {},
+    function (error) {
       if (error) throw error;
       else
         console.log(
-          `Done delete contact ${delitingContact[0].name} by id ${delitingContact[0].id}`
+          `Done delete contact ${delitingContact.name} by id ${delitingContact.id}`
         );
-    })()
+    }
   );
+  return delitingContact;
 };
 
 //-----------

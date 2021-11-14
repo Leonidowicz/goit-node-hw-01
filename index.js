@@ -2,26 +2,57 @@ const argv = require('yargs').argv;
 
 //----------
 
-const operation = require('./db/index');
+const {
+  getContacts,
+  getContactById,
+  addContact,
+  removeContact,
+} = require('./db/index');
+
+//----------
+
+function error(err) {
+  console.log(`  !!!!!__an error occurred__!!!!! -->   `, err);
+}
+function showMessage(msg, result) {
+  console.log(msg, result);
+}
 
 //----------
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
+    //
     case 'list':
-      console.log(await operation.getContacts());
+      getContacts()
+        .then((contacts) => {
+          showMessage(`Contact list received: `, contacts);
+        })
+        .catch(error);
       break;
 
     case 'get':
-      console.log(await operation.getContactById(id));
+      getContactById(id)
+        .then((contact) => {
+          showMessage(`Contact by id received: `, contact);
+        })
+        .catch(error);
       break;
 
     case 'add':
-      console.log(await operation.addContact({ name, email, phone }));
+      addContact({ name, email, phone })
+        .then((contact) => {
+          showMessage(`New contact was addet: `, contact);
+        })
+        .catch(error);
       break;
 
     case 'del':
-      console.log(await operation.removeContact(id));
+      removeContact(id)
+        .then((contact) => {
+          showMessage(`Contact by id deleted: `, contact);
+        })
+        .catch(error);
       break;
 
     default:

@@ -8,11 +8,10 @@ const contactsPath = path.resolve('./db/', 'contacts.json');
 //-----------
 
 const getContacts = async () => {
-  const data = await fs.readFile(contactsPath);
-  const contacts = JSON.parse(data);
+  const contacts = JSON.parse(await fs.readFile(contactsPath));
   return contacts;
 };
 
 //-----------
-
+getContacts();
 module.exports = getContacts;

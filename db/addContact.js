@@ -16,7 +16,7 @@ const addContact = async (contact) => {
     contact.email &&
     contact.name?.length &&
     contact.email?.length &&
-    typeof contact.phone === 'number'
+    typeof contact.phone !== 'bolean'
   ) {
     const contacts = await contactList();
     const newContact = { id: uuidv4(), ...contact };

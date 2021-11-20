@@ -11,12 +11,9 @@ const contactsPath = path.resolve('./db/', 'contacts.json');
 
 const addContact = async (contact) => {
   if (
-    !contact.name ||
-    !contact.phone ||
-    !contact.email ||
-    typeof contact.name === 'boolean' ||
-    typeof contact.phone === 'boolean' ||
-    typeof contact.email === 'boolean'
+    typeof contact.name !== 'string' ||
+    typeof contact.phone !== 'string' ||
+    typeof contact.email !== 'string'
   ) {
     throw new Error('Please check name/email/phone information');
   } else {

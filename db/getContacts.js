@@ -13,5 +13,6 @@ const getContacts = async () => {
 };
 
 //-----------
+
 getContacts();
 module.exports = getContacts;

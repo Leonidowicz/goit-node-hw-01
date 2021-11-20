@@ -3,10 +3,10 @@ const contacts = require('./getContacts');
 //-----------
 
 async function getContactById(id) {
-  const c = await contacts();
+  const contactList = await contacts();
 
-  const contact = c.find((item) => item.id === id);
-  if (!contact || contact.length === 0) {
+  const contact = contactList.find((item) => item.id === id);
+  if (!contact || contact.name.length === 0) {
     throw new Error('Contact not found');
   } else {
     return contact;

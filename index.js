@@ -11,7 +11,7 @@ const {
 
 //----------
 
-function error(err) {
+function errorMesage(err) {
   console.log(`  !!!!!__an error occurred__!!!!! -->   `, err);
 }
 function showMessage(msg, result) {
@@ -28,7 +28,7 @@ async function invokeAction({ action, id, name, email, phone }) {
         .then((contacts) => {
           showMessage(`Contact list received: `, contacts);
         })
-        .catch(error);
+        .catch(error => errorMesage(error));
       break;
 
     case 'get':
@@ -36,7 +36,7 @@ async function invokeAction({ action, id, name, email, phone }) {
         .then((contact) => {
           showMessage(`Contact by id received: `, contact);
         })
-        .catch(error);
+        .catch(error => errorMesage(error));
       break;
 
     case 'add':
@@ -44,15 +44,15 @@ async function invokeAction({ action, id, name, email, phone }) {
         .then((contact) => {
           showMessage(`New contact was addet: `, contact);
         })
-        .catch(error);
+        .catch(error => errorMesage(error));
       break;
 
-    case 'del':
+    case 'remove':
       removeContact(id)
         .then((contact) => {
           showMessage(`Contact by id deleted: `, contact);
         })
-        .catch(error);
+        .catch(error => errorMesage(error));
       break;
 
     default:

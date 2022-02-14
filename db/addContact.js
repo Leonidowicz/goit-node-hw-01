@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 const contactList = require('./getContacts');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto')
 
 //-----------
 
@@ -18,7 +18,7 @@ const addContact = async (contact) => {
     throw new Error('Please check name/email/phone information');
   } else {
     const contacts = await contactList();
-    const newContact = { id: uuidv4(), ...contact };
+    const newContact = { id: randomUUID(), ...contact };
 
     await fs.writeFile(contactsPath, JSON.stringify([...contacts, newContact]));
     return newContact;
